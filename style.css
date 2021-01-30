@@ -102,11 +102,25 @@ nav ul li a:hover, a.active{
     min-width: 100px;
 }
 .plus-minus-btn{
+    display: flex;
     color: #3352F2;
     font-size: 30px;
     padding: 2px;
     margin: 10px 10px 0px 0px;
     word-spacing: 20px;
+}
+
+/* added ticket-button class to style the buttons plus and minus */
+.ticket-button{
+    margin: 10%;
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    background-color:  #52AF3A;
 }
 .btn-style{
     display: block;

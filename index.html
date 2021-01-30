@@ -31,7 +31,10 @@
 
         <div class="booking-content">
             <h1>Mega City Bus</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                scrambled it to make a type specimen book.
+            </p>
         </div>
 
 
@@ -44,8 +47,9 @@
                     <input class="inp-style" type="text" name="" placeholder="Dhaka">
                 </div>
                 <div class="input-group">
-                    <label" for="">From</label>
-                    <input class="inp-style" type="text" name="" placeholder="Chittagone">
+                    <!-- the next line said more before. so corrected it. and the spelling of chittagong was chittagone. I am not sure if it is part of fixing the html. but it did to be safe. -->
+                    <label" for="">To</label>
+                    <input class="inp-style" type="text" name="" placeholder="Chittagong">
                 </div>
             </div>
 
@@ -61,21 +65,25 @@
             </div>
             <div class="inputs">
                 <div class="input-group f-class">
-                <div>
-                    <label for="">First Class ($150)</label>
-                    <input class="inp-style inp-width" type="number" name="">
+                    <div>
+                        <label for="">First Class ($150)</label>
+                        <input class="inp-style inp-width" type="number" value="0">
+                    </div>
+                    <!-- added ticket-button class to style the buttons plus and minus -->
+                    <div class="plus-minus-btn">
+                        <button id="firstclass-ticket-decrease" class="ticket-button"> - </button>
+                        <button id="firstclass-ticket-increase" class="ticket-button"> + </button>
+                    </div>
                 </div>
-                <div class="plus-minus-btn">
-                    <p>+ -</p>
-                </div>
-            </div>
                 <div class="input-group f-class">
                     <div>
                         <label for="">Economy ($100)</label>
-                        <input class="inp-style inp-width" type="number" name="">
+                        <input class="inp-style inp-width" type="number" value="0">
                     </div>
+                    <!-- added ticket-button class to style the buttons plus and minus -->
                     <div class="plus-minus-btn">
-                        <p> <span>+</span> <span>-</span> </p>
+                        <button id="economyclass-ticket-decrease" class="ticket-button"> - </button>
+                        <button id="economyclass-ticket-increase" class="ticket-button"> + </button>
                     </div>
                 </div>
 
