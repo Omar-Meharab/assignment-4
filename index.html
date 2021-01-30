@@ -43,31 +43,32 @@
 
             <div class="inputs">
                 <div class="input-group">
-                    <label" for="">From</label>
+                    <label" for="from">From</label>
                     <input class="inp-style" type="text" name="" placeholder="Dhaka">
                 </div>
                 <div class="input-group">
-                    <!-- the next line said more before. so corrected it. and the spelling of chittagong was chittagone. I am not sure if it is part of fixing the html. but it did to be safe. -->
-                    <label" for="">To</label>
+                    <!-- the next line said more before. so corrected it. and the spelling of chittagong was chittagone. -->
+                    <!-- I am not sure if it is part of fixing the html. but I did to be safe. -->
+                    <label" for="to">To</label>
                     <input class="inp-style" type="text" name="" placeholder="Chittagong">
                 </div>
             </div>
 
             <div class="inputs">
                 <div class="input-group">
-                    <label" for="">Departure</label>
+                    <label" for="departure">Departure</label>
                     <input class="inp-style" type="date" name="">
                 </div>
                 <div class="input-group">
-                    <label for="">Return</label>
+                    <label for="return">Return</label>
                     <input class="inp-style" type="date" name="">
                 </div>
             </div>
             <div class="inputs">
                 <div class="input-group f-class">
                     <div>
-                        <label for="">First Class ($150)</label>
-                        <input class="inp-style inp-width" type="number" value="0">
+                        <label for="first-class">First Class ($150)</label>
+                        <input id="firstclass-ticket-count" class="inp-style inp-width" type="number" value="0">
                     </div>
                     <!-- added ticket-button class to style the buttons plus and minus -->
                     <div class="plus-minus-btn">
@@ -77,8 +78,8 @@
                 </div>
                 <div class="input-group f-class">
                     <div>
-                        <label for="">Economy ($100)</label>
-                        <input class="inp-style inp-width" type="number" value="0">
+                        <label for="economy-class">Economy ($100)</label>
+                        <input id="economyclass-ticket-count" class="inp-style inp-width" type="number" value="0">
                     </div>
                     <!-- added ticket-button class to style the buttons plus and minus -->
                     <div class="plus-minus-btn">
@@ -94,7 +95,7 @@
                         <p>Subtotal</p>
                     </div>
                     <div class="right">
-                        <p>$0</p>
+                        <p id="sub-total">$0</p>
                     </div>
                 </div>
 
@@ -103,7 +104,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$0</p>
+                        <p id="tax-amount">$0</p>
                     </div>
                 </div>
                 <hr>
@@ -112,13 +113,130 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$0</p>
+                        <p id="grand-total">$0</p>
                     </div>
                 </div>
             </div>
-            <button class="btn-style">Book Now</button>
+            <button id="book-now-message" class="btn-style">Book Now</button>
         </div>
     </main>
+
+    <script>
+
+        //for decreasing economy class ticket count
+        document.getElementById('economyclass-ticket-increase').addEventListener('click', function () {
+            controlTicketChange('economyclass', true);
+        });
+
+        //for decreasing economy class ticket count
+        document.getElementById('economyclass-ticket-decrease').addEventListener('click', function () {
+            controlTicketChange('economyclass', false);
+        });
+
+        //for increasing first class ticket count
+        document.getElementById('firstclass-ticket-increase').addEventListener('click', function () {
+            controlTicketChange('firstclass', true);
+        });
+
+        //for decreasing first class ticket count
+        document.getElementById('firstclass-ticket-decrease').addEventListener('click', function () {
+            controlTicketChange('firstclass', false);
+        });
+
+        // for showing message.
+        document.getElementById('book-now-message').addEventListener('click', function () {
+            message();
+        });
+
+        // function for controlling the change of ticket increase or decrease.
+        function controlTicketChange(ticketClass, isIncrease) {
+            const ticketCount = getTicketInput(ticketClass);
+            let newTicketCount = ticketCount;
+            if (isIncrease == true) {
+                newTicketCount = ticketCount + 1;
+            }
+            if (isIncrease == false && ticketCount > 0) {
+                newTicketCount = ticketCount - 1;
+            }
+            document.getElementById(ticketClass + '-ticket-count').value = newTicketCount;
+            calculateTotal();
+        }
+
+        // function calculating subtotal, tax and grand total after adding tax with subtotal.
+        function calculateTotal() {
+            const economyClassAmount = getTicketInput('economyclass');
+            const firstClassAmount = getTicketInput('firstclass');
+
+            const subTotal = firstClassAmount * 150 + economyClassAmount * 100
+            document.getElementById('sub-total').innerText = '$' + subTotal;
+
+            const tax = Math.round(subTotal * 0.1);
+            document.getElementById('tax-amount').innerText = '$' + tax;
+
+            const grandTotal = subTotal + tax;
+            document.getElementById('grand-total').innerText = '$' + grandTotal;
+        }
+
+        // function for showing confirmation message for clicking on 'Book Now' button and show alert message if ticket count is not increase in  both class.
+        function message() {
+            const economyClassAmount = getTicketInput('economyclass');
+            const firstClassAmount = getTicketInput('firstclass');
+            const grandTotal = document.getElementById('grand-total').innerText;
+            if (economyClassAmount == 0 && firstClassAmount == 0) {
+                alert("You have not chosen any ticket.");
+            }
+            else if (economyClassAmount > 0 || firstClassAmount > 0) {
+                alert("Your purchase is confirmed. You have bought " + firstClassAmount + " First Class ticket and " + economyClassAmount + " Economy Class ticket. Total Cost " + grandTotal + ". Thank You for your purchase. We wish you safe travels!");
+            }
+        }
+
+        // function for getting ticket amount from first class or economy class.
+        function getTicketInput(ticketClass) {
+            const ticketInput = document.getElementById(ticketClass + '-ticket-count');
+            const ticketCount = parseInt(ticketInput.value);
+            return ticketCount;
+        }
+
+        // function controlTicketChange(isIncrease) {
+        //     const ticketInput = document.getElementById('economyclass-ticket-count');
+        //     const ticketCount = parseInt(ticketInput.value);
+        //     let newTicketCount = ticketCount;
+        //     if (isIncrease == true){
+        //         newTicketCount = ticketCount + 1;
+        //     }
+        //     if (isIncrease == false && ticketCount > 0){
+        //         newTicketCount = ticketCount - 1;
+        //     }
+        //     ticketInput.value = newTicketCount;
+        // }
+
+        // function controlTicketChange(isIncrease) {
+        //     const ticketInput = document.getElementById('firstclass-ticket-count');
+        //     const ticketCount = parseInt(ticketInput.value);
+        //     let newTicketCount = ticketCount;
+        //     if (isIncrease == true){
+        //         newTicketCount = ticketCount + 1;
+        //     }
+        //     if (isIncrease == false && ticketCount > 0){
+        //         newTicketCount = ticketCount - 1;
+        //     }
+        //     ticketInput.value = newTicketCount;
+        // }
+
+        // document.getElementById('economyclass-ticket-increase').addEventListener('click', function(){
+        //     const ticketInput = document.getElementById('ticket-count');
+        //     const ticketCount = parseInt(ticketInput.value);
+        //     const newTicketCount = ticketCount + 1;
+        //     ticketInput.value = newTicketCount;
+        // })
+
+        // document.getElementById('economyclass-ticket-decrease').addEventListener('click', function(){
+        //     const ticketInput = document.getElementById('ticket-count');
+        //     const ticketCount = parseInt(ticketInput.value);
+        //     const newTicketCount = ticketCount - 1;
+        //     ticketInput.value = newTicketCount;
+        // })
+    </script>
 
     <!--Thank You-->
 </body>
